@@ -57,7 +57,10 @@ def findClosestPair(points: np.array, n: int):
 
         # closestDist adalah delta untuk mencari di sekitar garis pembagi
         filteredPoints = points[np.where((points[:,0] >= midPoint - closestDist) & (points[:,0] <= midPoint + closestDist))]
-        newStripPoints = np.array(quickSortPoints(filteredPoints, 1))
+        if (points.shape[1] >= 2):
+            newStripPoints = np.array(quickSortPoints(filteredPoints, 1))
+        else:
+            newStripPoints = filteredPoints
         pointsDist = np.empty(newStripPoints.shape[1])
 
         for i in range (newStripPoints.shape[0]):
@@ -79,7 +82,7 @@ def findClosestPair(points: np.array, n: int):
 
 if __name__=="__main__":
     # Function testing
-    test = [[2, 1, 4], [2, 3, 4], [1, -9, 4], [2, 15, 4], [-2, 1, 4], [5, -16, 4]]
+    test = [[2], [5], [1], [15], [-2], [5]]
     arrlsit = quickSortPoints(test, 0)
     arr = np.array(arrlsit)
     print(findClosestPair(arr, 6))
