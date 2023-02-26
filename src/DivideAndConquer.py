@@ -31,17 +31,9 @@ def findClosestPair(points: np.array, n: int):
         closestPair = points
         closestDist = Utils.getDistancePoints(points[0], points[1])
         return closestPair, closestDist
-    # elif (n == 3):
-    #     closestDist = Utils.getDistancePoints(points[0], points[1])
-    #     for i in range (3):
-    #         for j in range (i+1, 3):
-    #             dist = Utils.getDistancePoints(points[i], points[j])
-    #             if (dist < closestDist):
-    #                 closestDist = dist
-    #                 closestPair = np.array(points[i], points[j])
     else:
         midPoint, leftPartPoints, rightPartPoints = dividePoints(points)
-        print(midPoint, leftPartPoints, rightPartPoints)
+        # print(midPoint, leftPartPoints, rightPartPoints)
 
         # mid = n //2
         # midPoint = points[mid]
