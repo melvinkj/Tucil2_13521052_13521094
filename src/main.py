@@ -1,5 +1,6 @@
 import IO
 from DivideAndConquer import findClosestPair
+from BruteForce import bruteForce
 import numpy as np
 
 def algorithmChooser(inputPoints):
@@ -16,6 +17,12 @@ def algorithmChooser(inputPoints):
             break
         elif (opt == 2):
             #Masukkin algoritma brute force di sini
+            points = np.array(inputPoints)
+            closestPair, closestDist = bruteForce(points)
+            print("Closest pair of points:", closestPair, "\n")
+            print("Closest distance is:", closestDist)
+            if (len(inputPoints[0]) == 3):
+                IO.visualize(inputPoints, closestPair[0], closestPair[1])
             break
         print("Your option is not valid!\n")
 
