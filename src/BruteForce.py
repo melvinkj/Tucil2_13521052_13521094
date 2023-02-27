@@ -44,18 +44,34 @@ def visualize(points, p1, p2) :
 def bruteForce(points):
     # points = IO.generateRandomPoints(10)
 
-    closestPairs = np.array()
+    # closestPairs = np.array([[]])
+    # for i in range(len(points)):
+    #     for j in range(i+1, len(points)):
+    #         if (i == 0 and j ==1):
+    #             shortestDistance = Utils.getDistancePoints(points[i], points[j])
+    #             closestPairs = np.append(closestPairs,[points[i], points[j]])
+    #         else :
+    #             if (Utils.getDistancePoints(points[i], points[j]) < shortestDistance):
+    #                 shortestDistance = Utils.getDistancePoints(points[i], points[j])
+    #                 closestPairs = np.array([points[i], points[j]])
+    #             elif (Utils.getDistancePoints(points[i], points[j]) < shortestDistance):
+    #                 closestPairs = np.append(closestPairs, [points[i], points[j]])
+    # print("Closest pair:")
+    # print(closestPairs)      
+    # return closestPairs, shortestDistance 
+
+    closestPairs = []
     for i in range(len(points)):
         for j in range(i+1, len(points)):
             if (i == 0 and j ==1):
                 shortestDistance = Utils.getDistancePoints(points[i], points[j])
-                closestPairs = np.append(closestPairs, [points[i], points[j]])
+                closestPairs += [[points[i], points[j]]]
             else :
                 if (Utils.getDistancePoints(points[i], points[j]) < shortestDistance):
-                    shortestDistance = Utils.getDistancePoint(points[i], points[j])
-                    closestPairs = np.array([points[i], points[j]])
+                    shortestDistance = Utils.getDistancePoints(points[i], points[j])
+                    closestPairs = [[points[i], points[j]]]
                 elif (Utils.getDistancePoints(points[i], points[j]) < shortestDistance):
-                    closestPairs = np.append(closestPairs, [points[i], points[j]])
-
-                
+                    closestPairs += [[points[i], points[j]]]
+    print("Closest pair:")
+    print(closestPairs)      
     return closestPairs, shortestDistance 
