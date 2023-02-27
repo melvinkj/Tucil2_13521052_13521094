@@ -1,5 +1,5 @@
 import numpy as np
-import Utils
+from Utils import getDistancePoints, appendIfNotSame, extendIfNotSame 
 
 # TODO: ask if ada wajib pake sorting dgn metode apa
 # Points is an array of points, index specify the index of coordinates to be sorted on
@@ -25,47 +25,107 @@ def dividePoints(points: np.array):
     else:
         return points[midIdx, 0],points[0:midIdx + 1], points[midIdx: ]
     
-def findClosestPair(points: np.array, n: int):
-    print(points)
-    if (n == 2):
-        closestPair = points
-        closestDist = Utils.getDistancePoints(points[0], points[1])
-        return closestPair, closestDist
+def bruteForce(points):
+    closestPairs = []
+    for i in range(len(points)):
+        for j in range(i+1, len(points)):
+            if (i == 0 and j ==1):
+                shortestDistance = getDistancePoints(points[i], points[j])
+                closestPair = [points[i], points[j]]
+                closestPairs.append(closestPair)
+            else :
+                if (getDistancePoints(points[i], points[j]) < shortestDistance):
+                   shortestDistance = getDistancePoints(points[i], points[j])
+                   closestPairs = []
+                   closestPair = [points[i], points[j]]
+                   closestPairs.append(closestPair)
+                elif (getDistancePoints(points[i], points[j]) == shortestDistance):
+                   closestPair = [points[i], points[j]]
+                   closestPairs = appendIfNotSame(closestPairs, closestPair)
+    return closestPairs, shortestDistance
+
+def findStripClosest(points, dist, dim):
+    closestDist = dist
+    if (dim <= 2):
+        newStripPoints = points
+        closestPairs = []
+        if (dim == 2):
+            newStripPoints = quickSortPoints(points, dim - 1)
+        n = len(newStripPoints)
+        for i in range (n):
+            for j in range (i+1, n):
+                if (abs(newStripPoints[i][dim-1] - newStripPoints[i][dim-1]) > dist):
+                    break
+                if (getDistancePoints(newStripPoints[i], newStripPoints[j]) < dist):
+                    closestPairs = []
+                    closestDist = getDistancePoints(newStripPoints[i], newStripPoints[j])
+                    closestPair = [newStripPoints[i], newStripPoints[j]]
+                    closestPairs = [closestPair]
+                elif (getDistancePoints(newStripPoints[i], newStripPoints[j]) == dist):
+                    closestPair = [newStripPoints[i], newStripPoints[j]]
+                    closestPairs = appendIfNotSame(closestPairs, closestPair)
+                    closestDist = dist
     else:
-        midPoint, leftPartPoints, rightPartPoints = dividePoints(points)
+        closestPairs, closestDist = findClosestPair(points, len(points), dim-1)
+    return closestPairs, closestDist
+
+
+
+def findClosestPair(unsortedPoints, n: int, dim: int):
+    if (n == 2):
+        closestPair = unsortedPoints
+        closestPairs = [closestPair]
+        closestDist = getDistancePoints(unsortedPoints[0], unsortedPoints[1])
+    elif (n == 3):
+        closestPairs, closestDist = bruteForce(unsortedPoints)
+    else:
+        # midPoint, leftPartPoints, rightPartPoints = dividePoints(points)
         # print(midPoint, leftPartPoints, rightPartPoints)
+        points = quickSortPoints(unsortedPoints, len(unsortedPoints[0]) - dim)
+        # print(points)
+        mid = n // 2
+        midPoint = points[mid][len(unsortedPoints[0]) - dim]
+        leftPart = points[0:mid]
+        rightPart = points[mid:]
 
-        # mid = n //2
-        # midPoint = points[mid]
-        # leftPartPoints = points[0:mid]
-        # rightPartPoints = points[mid:]
-
-        leftClosestPoints, distLeftPair = findClosestPair(leftPartPoints, leftPartPoints.shape[0])
-        rightClosestPoints, distRightPair = findClosestPair(rightPartPoints, rightPartPoints.shape[0])
+        leftClosestPoints, distLeftPair = findClosestPair(leftPart, len(leftPart), dim)
+        rightClosestPoints, distRightPair = findClosestPair(rightPart, len(rightPart), dim)
+        closestPairs = []
+        # print(leftClosestPoints)
+        # print(rightClosestPoints)
+        # print(closestPairs)
 
         # TODO: consider if there are two pair with the same distance?
-        closestPair = leftClosestPoints if distLeftPair <= distRightPair else rightClosestPoints
-        closestDist = distLeftPair if distLeftPair <= distRightPair else distRightPair
+        if (distLeftPair < distRightPair):
+            closestPairs = leftClosestPoints
+            closestDist = distLeftPair
+        elif (distRightPair > distLeftPair):
+            closestPairs = rightClosestPoints
+            closestDist = distLeftPair
+        elif (distRightPair == distLeftPair):
+            closestPairs = leftClosestPoints
+            closestPairs = extendIfNotSame(closestPairs, rightClosestPoints)
+            closestDist = distLeftPair
+        # print(closestPairs)
+        leftBound = midPoint - closestDist
+        rightBound = midPoint + closestDist
 
         # closestDist adalah delta untuk mencari di sekitar garis pembagi
-        filteredPoints = points[np.where((points[:,0] >= midPoint - closestDist) & (points[:,0] <= midPoint + closestDist))]
-        if (points.shape[1] >= 2):
-            newStripPoints = np.array(quickSortPoints(filteredPoints, 1))
-        else:
-            newStripPoints = filteredPoints
-        pointsDist = np.empty(newStripPoints.shape[1])
+        filteredPoints = [x for x in points if leftBound <= x[0] <= rightBound]
+        # print(filteredPoints)
+        stripClosestPoints, distStripPair = findStripClosest(filteredPoints, closestDist, dim)
+        # print(stripClosestPoints)
 
-        for i in range (newStripPoints.shape[0]):
-            for j in range (i+1, newStripPoints.shape[0]):
-                for k in range (newStripPoints.shape[1]):
-                    pointsDist[k] = abs(newStripPoints[i, k] - newStripPoints[j, k])
-                if np.all(pointsDist <= closestDist):
-                    newDist = Utils.getDistancePoints(newStripPoints[i], newStripPoints[j])
-                    if newDist < closestDist:
-                        closestDist = newDist
-                        closestPair = np.array([newStripPoints[i], newStripPoints[j]])
+        if (distStripPair < closestDist):
+            closestPairs = []
+            closestPairs = stripClosestPoints
+            closestDist = distStripPair
+        elif (distStripPair == closestDist):
+            closestPairs = extendIfNotSame(closestPairs, stripClosestPoints)
+        # print(stripClosestPoints)
+        # print(closestPairs)
         
-        return closestPair, closestDist
+    return closestPairs, closestDist
         
                     
 
@@ -74,7 +134,5 @@ def findClosestPair(points: np.array, n: int):
 
 if __name__=="__main__":
     # Function testing
-    test = [[2], [5], [1], [15], [-2], [5]]
-    arrlsit = quickSortPoints(test, 0)
-    arr = np.array(arrlsit)
-    print(findClosestPair(arr, 6))
+    test = [[2, 6, 1, 4], [5, 4, 3, 1], [1, 3, 5, 6], [15, 4, 1, 7]]
+    print(findClosestPair(test, 4, 4))
