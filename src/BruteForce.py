@@ -70,7 +70,7 @@ def bruteForce(points):
                 if (Utils.getDistancePoints(points[i], points[j]) < shortestDistance):
                     shortestDistance = Utils.getDistancePoints(points[i], points[j])
                     closestPairs = [[points[i], points[j]]]
-                elif (Utils.getDistancePoints(points[i], points[j]) < shortestDistance):
+                elif (Utils.getDistancePoints(points[i], points[j]) == shortestDistance):
                     closestPairs += [[points[i], points[j]]]
     print("Closest pair:")
     print(closestPairs)      
