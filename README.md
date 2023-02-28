@@ -42,6 +42,7 @@ $ python src/main.py
 |       tc1.txt
 |       tc10.txt
 |       tc11.txt
+|       tc12.txt
 |       tc2.txt
 |       tc3.txt
 |       tc4.txt
@@ -50,9 +51,6 @@ $ python src/main.py
 |       tc7.txt
 |       tc8.txt
 |       tc9.txt
-|       tc10.txt
-|       tc11.txt
-|       tc12.txt
 |
 +---src
 |       BruteForce.py
