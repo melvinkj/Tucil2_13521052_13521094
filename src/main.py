@@ -9,33 +9,36 @@ def algorithmChooser(inputPoints):
         IO.algorithmMenu()
         algorithmOpt = int(input("Enter your option: "))
         if (algorithmOpt == 1):
-            points = np.array(inputPoints)
+            ctrOpt = 0
             start = time.time()
-            closestPairs, closestDist = findClosestPair(points, len(inputPoints), len(inputPoints[0]))
+            closestPairs, closestDist, ctrOpt = findClosestPair(inputPoints, len(inputPoints), len(inputPoints[0]), ctrOpt)
             end = time.time()
             elapsed_time = (end - start) * 1000  # in milliseconds
-            print("Closest pair of points:", closestPairs, "\n")
+            print("Closest pair(s) of points:", closestPairs, "\n")
             print("Closest distance is:", closestDist)
+            print("Number of Euclidean operations:", ctrOpt)
             print("\nExecution time: ", elapsed_time, "milliseconds")
             if (len(inputPoints[0]) == 3):
                 IO.visualize(inputPoints, closestPairs)
             break
         elif (algorithmOpt == 2):
             #Masukkin algoritma brute force di sini
+            ctrOpt = 0
             points = inputPoints
             start = time.time()
-            closestPairs, closestDist = bruteForce(points)
+            closestPairs, closestDist, ctrOpt = bruteForce(points, ctrOpt)
             end = time.time()
             elapsed_time = (end - start) * 1000  # in milliseconds
             print("Closest pair(s) of points:", closestPairs, "\n")
             print("Closest distance is:", closestDist)
+            print("Number of Euclidean operations:", ctrOpt)
             print("\nExecution time: ", elapsed_time, "milliseconds")
 
             if (len(inputPoints[0]) == 3):
                 IO.visualize(inputPoints, closestPairs)
             break
         print("Your option is not valid!\n")
-    return algorithmOpt, closestPairs, closestDist, elapsed_time
+    return algorithmOpt, closestPairs, closestDist, elapsed_time, ctrOpt
 
 def main():
     IO.splashScreen()
@@ -46,18 +49,15 @@ def main():
             nPoints, nDims = IO.inputHandler()
             print("Here is your random points: \n")
             randPoints = IO.generateRandomPoints(nPoints, nDims)
-            algorithmOpt, closestPairs, closestDist, elapsed_time = algorithmChooser(randPoints)
-            IO.saveConfirmation(nPoints, nDims, algorithmOpt, randPoints, closestPairs, closestDist, elapsed_time)
+            algorithmOpt, closestPairs, closestDist, elapsed_time, ctrOpt = algorithmChooser(randPoints)
+            IO.saveConfirmation(nPoints, nDims, algorithmOpt, randPoints, closestPairs, closestDist, elapsed_time, ctrOpt)
         elif (opt == 2):
             fileName = input("Enter your file name without .txt: ")
             filePoints = IO.readFromFile(fileName)
-            algorithmOpt, closestPairs, closestDist, elapsed_time = algorithmChooser(filePoints)
-            IO.saveConfirmation(nPoints, nDims, algorithmOpt, filePoints,closestPairs, closestDist, elapsed_time)
+            algorithmOpt, closestPairs, closestDist, elapsed_time, ctrOpt = algorithmChooser(filePoints)
+            IO.saveConfirmation(nPoints, nDims, algorithmOpt, filePoints,closestPairs, closestDist, elapsed_time, ctrOpt)
         else:
             print("Option not validdd \n")
-        
-        
-
         IO.mainMenu()
         opt = int(input("Enter your option: "))
 

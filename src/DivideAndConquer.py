@@ -45,7 +45,7 @@ def dividePoints(points: np.array):
 #                    closestPairs = appendIfNotSame(closestPairs, closestPair)
 #     return closestPairs, shortestDistance
 
-def findStripClosest(points, dist, dim):
+def findStripClosest(points, dist, dim, ctr):
     closestDist = dist
     if (dim <= 2):
         newStripPoints = points
@@ -57,27 +57,28 @@ def findStripClosest(points, dist, dim):
             for j in range (i+1, n):
                 if (abs(newStripPoints[i][dim-1] - newStripPoints[j][dim-1]) > closestDist):
                     break
-                if (getDistancePoints(newStripPoints[i], newStripPoints[j]) < closestDist):
+                distPoint, ctr = getDistancePoints(newStripPoints[i], newStripPoints[j], ctr)
+                if (distPoint < closestDist):
                     closestPairs = []
-                    closestDist = getDistancePoints(newStripPoints[i], newStripPoints[j])
+                    closestDist = distPoint
                     closestPair = [newStripPoints[i], newStripPoints[j]]
                     closestPairs = [closestPair]
-                elif (getDistancePoints(newStripPoints[i], newStripPoints[j]) == closestDist):
+                elif (distPoint == closestDist):
                     closestPair = [newStripPoints[i], newStripPoints[j]]
                     closestPairs = appendIfNotSame(closestPairs, closestPair)
     else:
-        closestPairs, closestDist = findClosestPair(points, len(points), dim-1)
-    return closestPairs, closestDist
+        closestPairs, closestDist, ctr = findClosestPair(points, len(points), dim-1, ctr)
+    return closestPairs, closestDist, ctr
 
 
 
-def findClosestPair(unsortedPoints, n: int, dim: int):
+def findClosestPair(unsortedPoints, n: int, dim: int, ctr: int):
     if (n == 2):
         closestPair = unsortedPoints
         closestPairs = [closestPair]
-        closestDist = getDistancePoints(unsortedPoints[0], unsortedPoints[1])
+        closestDist, ctr = getDistancePoints(unsortedPoints[0], unsortedPoints[1], ctr)
     elif (n == 3):
-        closestPairs, closestDist = bruteForce(unsortedPoints)
+        closestPairs, closestDist, ctr = bruteForce(unsortedPoints, ctr)
     else:
         # midPoint, leftPartPoints, rightPartPoints = dividePoints(points)
         # print(midPoint, leftPartPoints, rightPartPoints)
@@ -91,8 +92,8 @@ def findClosestPair(unsortedPoints, n: int, dim: int):
         # print(leftPart)
         # print(rightPart)
 
-        leftClosestPoints, distLeftPair = findClosestPair(leftPart, len(leftPart), dim)
-        rightClosestPoints, distRightPair = findClosestPair(rightPart, len(rightPart), dim)
+        leftClosestPoints, distLeftPair, ctr = findClosestPair(leftPart, len(leftPart), dim, ctr)
+        rightClosestPoints, distRightPair, ctr = findClosestPair(rightPart, len(rightPart), dim, ctr)
         closestPairs = []
         # print(leftClosestPoints)
         # print(rightClosestPoints)
@@ -115,7 +116,7 @@ def findClosestPair(unsortedPoints, n: int, dim: int):
 
         # closestDist adalah delta untuk mencari di sekitar garis pembagi
         filteredPoints = [x for x in points if leftBound <= x[len(unsortedPoints[0]) - dim] <= rightBound]
-        stripClosestPoints, distStripPair = findStripClosest(filteredPoints, closestDist, dim)
+        stripClosestPoints, distStripPair, ctr = findStripClosest(filteredPoints, closestDist, dim, ctr)
         # print(stripClosestPoints)
         # print("points in strip: ", filteredPoints)
         # print("closest points in strip", stripClosestPoints,distStripPair)
@@ -131,7 +132,7 @@ def findClosestPair(unsortedPoints, n: int, dim: int):
         # print(stripClosestPoints)
         # print(closestPairs)
         
-    return closestPairs, closestDist
+    return closestPairs, closestDist, ctr
         
                     
 
@@ -140,5 +141,5 @@ def findClosestPair(unsortedPoints, n: int, dim: int):
 
 if __name__=="__main__":
     # Function testing
-    test = [[2, 6, 1, 4], [5, 4, 3, 1], [1, 3, 5, 6], [15, 4, 1, 7], [5, 6, 7, 8], [3, 4, 5, 1]]
-    print(findClosestPair(test, 6, 4))
+    test = [[53, 69, 54], [69, 38, -7], [-83, -34, 96], [-3, 95, 72], [-3, -85, 68], [-91, 58, 31], [92, 10, -78], [-41, 87, 53]]
+    print(findClosestPair(test, 8, 3, 0))

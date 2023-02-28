@@ -1,10 +1,12 @@
 import math
 
-def getDistancePoints(point1, point2):
+def getDistancePoints(point1, point2, ctrOpt):
     dist = 0
     for i in range (len(point1)):
         dist += (point1[i] - point2[i]) ** 2
-    return math.sqrt(dist)
+
+    ctrOpt+=1;
+    return math.sqrt(dist), ctrOpt
 
 def appendIfNotSame(closestPairs, pointPair):
     has_common_element = False

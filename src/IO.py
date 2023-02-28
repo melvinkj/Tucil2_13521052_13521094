@@ -22,7 +22,7 @@ def algorithmMenu():
         2. Brute Force
     """)
 
-def saveConfirmation(nPoints, nDims, opt, points, closestPairs, closestDist, elapsed_time):
+def saveConfirmation(nPoints, nDims, opt, points, closestPairs, closestDist, elapsed_time, ctrOpt):
     save = input("Do you want to save the result to a .txt file (Y/N)? ")
 
     while (save != "Y" and save!= "y" and save!= "N" and save != "n"):
@@ -31,9 +31,9 @@ def saveConfirmation(nPoints, nDims, opt, points, closestPairs, closestDist, ela
 
     if (save == "Y" or save == "y") :
         fileName = input("The result will be saved to a file. Enter your desired file name: ")
-        writeToFile(nPoints, nDims, opt, fileName, points, closestPairs, closestDist, elapsed_time)
+        writeToFile(nPoints, nDims, opt, fileName, points, closestPairs, closestDist, elapsed_time, ctrOpt)
 
-def writeToFile(nPoints, nDims, opt, fileName, points, closestPairs, closestDist, elapsed_time):
+def writeToFile(nPoints, nDims, opt, fileName, points, closestPairs, closestDist, elapsed_time, ctrOpt):
     dir_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
     f = open(dir_path + "\\output\\" + fileName + ".txt", "w")
     f.write("Number of Points: " + str(nPoints)+ "\n")
@@ -42,6 +42,7 @@ def writeToFile(nPoints, nDims, opt, fileName, points, closestPairs, closestDist
     f.write("Algorithm: " + ("Divide and Conquer" if opt == 1 else "Brute Force") + "\n")
     f.write("Closest Pairs: " + str(closestPairs) + "\n")
     f.write("Closest Distance: " + str(closestDist) + "\n")
+    f.write("Number of Euclidean operations:", ctrOpt)
     f.write("Execution Time: " + str(elapsed_time) + " milliseconds\n")
     f.close()
 

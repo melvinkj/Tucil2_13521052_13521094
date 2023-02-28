@@ -41,7 +41,7 @@ def visualize(points, p1, p2) :
 
     plt.show()
 
-def bruteForce(points):
+def bruteForce(points, ctr):
     # points = IO.generateRandomPoints(10)
 
     # closestPairs = np.array([[]])
@@ -64,16 +64,17 @@ def bruteForce(points):
     for i in range(len(points)):
         for j in range(i+1, len(points)):
             if (i == 0 and j ==1):
-                shortestDistance = Utils.getDistancePoints(points[i], points[j])
+                shortestDistance, ctr = Utils.getDistancePoints(points[i], points[j], ctr)
                 closestPairs += [[points[i], points[j]]]
             else :
-                if (Utils.getDistancePoints(points[i], points[j]) < shortestDistance):
+                distPoint, ctr = Utils.getDistancePoints(points[i], points[j], ctr)
+                if (distPoint < shortestDistance):
                     closestPairs = []
-                    shortestDistance = Utils.getDistancePoints(points[i], points[j])
+                    shortestDistance = distPoint
                     closestPairs = [[points[i], points[j]]]
-                elif (Utils.getDistancePoints(points[i], points[j]) == shortestDistance):
+                elif (distPoint == shortestDistance):
                     closestPair = [points[i], points[j]]
                     closestPairs = Utils.appendIfNotSame(closestPairs, closestPair)
     # print("Closest pair:")
     # print(closestPairs)      
-    return closestPairs, shortestDistance 
+    return closestPairs, shortestDistance, ctr 
