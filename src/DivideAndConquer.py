@@ -30,14 +30,11 @@ def findStripClosest(points, dist, dim, ctr):
         if (dim == 2):
             newStripPoints = quickSortPoints(points, dim - 1)
         n = len(newStripPoints)
-        # max_inter= 0
         for i in range (n):
-            # inter = 0
             for j in range (i+1, n):
                 if (newStripPoints[j][dim-1] - newStripPoints[j][dim-1] > closestDist):
                     break
                 distPoint, ctr = getDistancePoints(newStripPoints[i], newStripPoints[j], ctr)
-                # inter+= 1
                 if (distPoint < closestDist):
                     closestPairs = []
                     closestDist = distPoint
@@ -46,8 +43,6 @@ def findStripClosest(points, dist, dim, ctr):
                 elif (distPoint == closestDist):
                     closestPair = [newStripPoints[i], newStripPoints[j]]
                     closestPairs = appendIfNotSame(closestPairs, closestPair)
-            # max_inter = inter if inter > max_inter else max_inter
-        # print(max_inter)
     # If the dimension is not two
     else:
         closestPairs, closestDist, ctr = findClosestPair(points, len(points), dim-1, ctr)
