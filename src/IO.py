@@ -22,6 +22,11 @@ def algorithmMenu():
         2. Brute Force
     """)
 
+def saveConfirmation():
+    print("""
+        Do you want to save the result to a .txt file? (Y/N)
+    """)
+
 # TODO: Input validation gatau masih kurang atau ga
 def inputHandler():
     while True:
