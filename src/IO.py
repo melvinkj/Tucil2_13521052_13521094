@@ -120,13 +120,14 @@ def visualize(points, pairs) :
         #     ax.scatter(x,y,z, c='r', marker='o')
         isPair = False
         i = 0
+        color = ['blue', 'green', 'cyan', 'magenta', 'yellow', 'black', 'tab:orange', 'tab:olive']
         while (not isPair and i < len(pairs)):
             if(x == (pairs[i][0][0]) and y == pairs[i][0][1] and z == pairs[i][0][2]) or (x == pairs[i][1][0] and y == pairs[i][1][1] and z == pairs[i][1][2]):
                 isPair = True
             else :
                 i += 1
         if (isPair):
-            ax.scatter(x,y,z, c=i, marker='o')
+            ax.scatter(x,y,z, c=color[(i%8)], marker='o')
         else :
             ax.scatter(x,y,z, c='r', marker='o')
 
