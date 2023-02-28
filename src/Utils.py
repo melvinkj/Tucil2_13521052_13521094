@@ -1,4 +1,5 @@
 import math
+import random
 
 def getDistancePoints(point1, point2, ctrOpt):
     dist = 0
@@ -28,3 +29,24 @@ def extendIfNotSame(closestPairs, pointPairs):
         closestPairs = appendIfNotSame(closestPairs, arr)
 
     return closestPairs
+
+def formatPoint(point):
+    strPoint = "("
+    i = 0
+    while (i < len(point)-1):
+        strPoint = strPoint + str(point[i]) + "," 
+        i += 1
+        
+    strPoint = strPoint + str(point[i]) + ")"
+
+    return strPoint
+
+def generateRandomPoints(total_points, total_dim) :
+    points = [[0 for j in range (total_dim)] for i in range(total_points)]
+
+    for i in range (total_points) :
+        for j in range (total_dim) :
+            points[i][j] = random.randint(-100, 100)
+    
+    print(points)
+    return points

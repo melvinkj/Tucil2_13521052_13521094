@@ -3,6 +3,7 @@ from DivideAndConquer import findClosestPair
 from BruteForce import bruteForce
 import numpy as np
 import time
+import Utils
 
 def algorithmChooser(inputPoints):
     while True:
@@ -14,7 +15,6 @@ def algorithmChooser(inputPoints):
             closestPairs, closestDist, ctrOpt = findClosestPair(inputPoints, len(inputPoints), len(inputPoints[0]), ctrOpt)
             end = time.time()
             elapsed_time = (end - start) * 1000  # in milliseconds
-            # print("Closest pair(s) of points:", closestPairs, "\n")
             IO.printPairs(closestPairs)
             print("Closest distance is:", closestDist)
             print("Number of Euclidean operations:", ctrOpt)
@@ -23,14 +23,12 @@ def algorithmChooser(inputPoints):
                 IO.visualize(inputPoints, closestPairs)
             break
         elif (algorithmOpt == 2):
-            #Masukkin algoritma brute force di sini
             ctrOpt = 0
             points = inputPoints
             start = time.time()
             closestPairs, closestDist, ctrOpt = bruteForce(points, ctrOpt)
             end = time.time()
             elapsed_time = (end - start) * 1000  # in milliseconds
-            # print("Closest pair(s) of points:", closestPairs, "\n")
             IO.printPairs(closestPairs)
             print("Closest distance is:", closestDist)
             print("Number of Euclidean operations:", ctrOpt)
@@ -50,7 +48,7 @@ def main():
         if (opt == 1):
             nPoints, nDims = IO.inputHandler()
             print("Here is your random points: \n")
-            randPoints = IO.generateRandomPoints(nPoints, nDims)
+            randPoints = Utils.generateRandomPoints(nPoints, nDims)
             algorithmOpt, closestPairs, closestDist, elapsed_time, ctrOpt = algorithmChooser(randPoints)
             IO.saveConfirmation(nPoints, nDims, algorithmOpt, randPoints, closestPairs, closestDist, elapsed_time, ctrOpt)
         elif (opt == 2):
