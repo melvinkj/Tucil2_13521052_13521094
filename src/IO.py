@@ -69,12 +69,21 @@ def writeToFile(nPoints, nDims, fileName, points, closestPairsDNC, closestDistDN
 
 def inputHandler():
     while True:
-        nPoints = int(input("Enter the n points you want to generate: "))
+        try:
+            nPoints = int(input("Enter the n points you want to generate: "))
+        except: 
+            print("Your input of n points is not valid. Please input a number with a minimum of two!")
+            continue
         if (nPoints >= 2):
             break
         print("Your input of n points is not valid. Please input a number with a minimum of two!")
     while True:
-        nDims = int(input("Enter the d dimension of points you want to generate: "))
+        try:
+            nDims = int(input("Enter the d dimension of points you want to generate: "))
+        except:
+            print("Your input of n points is not valid. Please input a number with a minimum of two!")
+            continue
+
         if (nDims > 0):
             break
         print("Your input of d dimensions is not valid. Please input a number with a minimum of one!")
