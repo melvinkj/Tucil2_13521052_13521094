@@ -1,0 +1,10 @@
+Number of Points: 10
+Dimension: 2
+Points: [[77, 22], [43, 52], [41, 24], [34, 24], [27, 24], [23, 2], [24, 15], [12, 54], [22, 54], [41, 14]]
+Algorithm: Divide and Conquer
+Closest pair(s) of points: 
+	1. (34,24) - (41,24)
+	2. (27,24) - (34,24)
+
+Closest Distance: 7.0
+Number of Euclidean operations:26Execution Time: 1.0008811950683594 milliseconds

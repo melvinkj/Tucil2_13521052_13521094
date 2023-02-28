@@ -14,7 +14,8 @@ def algorithmChooser(inputPoints):
             closestPairs, closestDist, ctrOpt = findClosestPair(inputPoints, len(inputPoints), len(inputPoints[0]), ctrOpt)
             end = time.time()
             elapsed_time = (end - start) * 1000  # in milliseconds
-            print("Closest pair(s) of points:", closestPairs, "\n")
+            # print("Closest pair(s) of points:", closestPairs, "\n")
+            IO.printPairs(closestPairs)
             print("Closest distance is:", closestDist)
             print("Number of Euclidean operations:", ctrOpt)
             print("\nExecution time: ", elapsed_time, "milliseconds")
@@ -29,7 +30,8 @@ def algorithmChooser(inputPoints):
             closestPairs, closestDist, ctrOpt = bruteForce(points, ctrOpt)
             end = time.time()
             elapsed_time = (end - start) * 1000  # in milliseconds
-            print("Closest pair(s) of points:", closestPairs, "\n")
+            # print("Closest pair(s) of points:", closestPairs, "\n")
+            IO.printPairs(closestPairs)
             print("Closest distance is:", closestDist)
             print("Number of Euclidean operations:", ctrOpt)
             print("\nExecution time: ", elapsed_time, "milliseconds")

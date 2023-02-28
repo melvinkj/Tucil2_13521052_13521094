@@ -46,6 +46,12 @@ def saveConfirmation(nPoints, nDims, opt, points, closestPairs, closestDist, ela
         fileName = input("The result will be saved to a file. Enter your desired file name: ")
         writeToFile(nPoints, nDims, opt, fileName, points, closestPairs, closestDist, elapsed_time, ctrOpt)
 
+def writePairsToFile(f, pairs):
+    f.write("Closest pair(s) of points: \n")
+    for i in range (len(pairs)):
+        f.write("\t" + str(i+1) + ". " + formatPoint(pairs[i][0]) + " - " + formatPoint(pairs[i][1]) + "\n")
+    f.write("\n")
+
 def writeToFile(nPoints, nDims, opt, fileName, points, closestPairs, closestDist, elapsed_time, ctrOpt):
     dir_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
     f = open(dir_path + "\\output\\" + fileName + ".txt", "w")
@@ -53,9 +59,10 @@ def writeToFile(nPoints, nDims, opt, fileName, points, closestPairs, closestDist
     f.write("Dimension: " + str(nDims)+ "\n")
     f.write("Points: " + str(points) + "\n")
     f.write("Algorithm: " + ("Divide and Conquer" if opt == 1 else "Brute Force") + "\n")
-    f.write("Closest Pairs: " + str(closestPairs) + "\n")
+    # f.write("Closest Pairs: " + str(closestPairs) + "\n")
+    writePairsToFile(f, closestPairs)
     f.write("Closest Distance: " + str(closestDist) + "\n")
-    f.write("Number of Euclidean operations:", ctrOpt)
+    f.write("Number of Euclidean operations:" + str(ctrOpt))
     f.write("Execution Time: " + str(elapsed_time) + " milliseconds\n")
     f.close()
 
@@ -125,3 +132,24 @@ def visualize(points, pairs) :
 
 
     plt.show()
+
+def formatPoint(point):
+    # point = f"({point[0]}, {point[1]}, {point[2]})"
+    # print(point)
+    # print(point[0])
+    strPoint = "("
+    i = 0
+    while (i < len(point)-1):
+        strPoint = strPoint + str(point[i]) + "," 
+        i += 1
+        
+    strPoint = strPoint + str(point[i]) + ")"
+
+    return strPoint
+
+def printPairs(pairs):
+    print("Closest pair(s) of points: ")
+    for i in range (len(pairs)):
+        print("\t" + str(i+1) + ". " + formatPoint(pairs[i][0]) + " - " + formatPoint(pairs[i][1]))
+
+    print("\n")
