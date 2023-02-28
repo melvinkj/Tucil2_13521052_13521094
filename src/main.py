@@ -7,7 +7,7 @@ import time
 def algorithmChooser(inputPoints):
     while True:
         IO.algorithmMenu()
-        algorithmOpt = int(input("Enter your option: "))
+        algorithmOpt = int(input("Enter your choice: "))
         if (algorithmOpt == 1):
             ctrOpt = 0
             start = time.time()
@@ -37,13 +37,13 @@ def algorithmChooser(inputPoints):
             if (len(inputPoints[0]) == 3):
                 IO.visualize(inputPoints, closestPairs)
             break
-        print("Your option is not valid!\n")
+        print("\033[31mInvalid input! \033[00m \n")
     return algorithmOpt, closestPairs, closestDist, elapsed_time, ctrOpt
 
 def main():
     IO.splashScreen()
     IO.mainMenu()
-    opt = int(input("Enter your option: "))
+    opt = int(input("Enter your choice: "))
     while (opt != 3):
         if (opt == 1):
             nPoints, nDims = IO.inputHandler()
@@ -57,9 +57,12 @@ def main():
             algorithmOpt, closestPairs, closestDist, elapsed_time, ctrOpt = algorithmChooser(filePoints)
             IO.saveConfirmation(nPoints, nDims, algorithmOpt, filePoints,closestPairs, closestDist, elapsed_time, ctrOpt)
         else:
-            print("Option not validdd \n")
+            print("\033[31mInvalid input! \033[00m \n")
+        
+        
+
         IO.mainMenu()
-        opt = int(input("Enter your option: "))
+        opt = int(input("Enter your choice: "))
 
 if __name__=="__main__":
     main()
