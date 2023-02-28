@@ -50,6 +50,9 @@ $ python src/main.py
 |       tc7.txt
 |       tc8.txt
 |       tc9.txt
+|       tc10.txt
+|       tc11.txt
+|       tc12.txt
 |
 +---src
 |       BruteForce.py
