@@ -2,31 +2,40 @@ import IO
 from DivideAndConquer import findClosestPair
 from BruteForce import bruteForce
 import numpy as np
+import time
 
 def algorithmChooser(inputPoints):
     while True:
         IO.algorithmMenu()
-        opt = int(input("Enter your option: "))
-        if (opt == 1):
+        algorithmOpt = int(input("Enter your option: "))
+        if (algorithmOpt == 1):
             points = np.array(inputPoints)
-            closestPair, closestDist = findClosestPair(points, len(inputPoints))
-            print("Closest pair of points:", closestPair, "\n")
+            start = time.time()
+            closestPairs, closestDist = findClosestPair(points, len(inputPoints), len(inputPoints[0]))
+            end = time.time()
+            elapsed_time = (end - start) * 1000  # in milliseconds
+            print("Closest pair of points:", closestPairs, "\n")
             print("Closest distance is:", closestDist)
+            print("\nExecution time: ", elapsed_time, "milliseconds")
             if (len(inputPoints[0]) == 3):
-                IO.visualize(inputPoints, closestPair[0], closestPair[1])
+                IO.visualize(inputPoints, closestPairs)
             break
-        elif (opt == 2):
+        elif (algorithmOpt == 2):
             #Masukkin algoritma brute force di sini
             points = inputPoints
+            start = time.time()
             closestPairs, closestDist = bruteForce(points)
+            end = time.time()
+            elapsed_time = (end - start) * 1000  # in milliseconds
             print("Closest pair(s) of points:", closestPairs, "\n")
             print("Closest distance is:", closestDist)
-            # print(type(closestPairs))
+            print("\nExecution time: ", elapsed_time, "milliseconds")
 
             if (len(inputPoints[0]) == 3):
                 IO.visualize(inputPoints, closestPairs)
             break
         print("Your option is not valid!\n")
+    return algorithmOpt, closestPairs, closestDist, elapsed_time
 
 def main():
     IO.splashScreen()
@@ -37,13 +46,18 @@ def main():
             nPoints, nDims = IO.inputHandler()
             print("Here is your random points: \n")
             randPoints = IO.generateRandomPoints(nPoints, nDims)
-            algorithmChooser(randPoints)
+            algorithmOpt, closestPairs, closestDist, elapsed_time = algorithmChooser(randPoints)
+            IO.saveConfirmation(nPoints, nDims, algorithmOpt, randPoints, closestPairs, closestDist, elapsed_time)
         elif (opt == 2):
             fileName = input("Enter your file name without .txt: ")
             filePoints = IO.readFromFile(fileName)
-            algorithmChooser(filePoints)
+            algorithmOpt, closestPairs, closestDist, elapsed_time = algorithmChooser(filePoints)
+            IO.saveConfirmation(nPoints, nDims, algorithmOpt, filePoints,closestPairs, closestDist, elapsed_time)
         else:
             print("Option not validdd \n")
+        
+        
+
         IO.mainMenu()
         opt = int(input("Enter your option: "))
 

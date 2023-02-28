@@ -1,0 +1,5 @@
+Points: [[59, 23, 57, 50, -37], [27, -42, 81, -94, -55], [8, -42, 77, 77, -11]]
+Algorithm: Divide and Conquer
+Closest Pairs: [[[59, 23, 57, 50, -37], [8, -42, 77, 77, -11]]]
+Closest Distance: 92.90317540321213
+Execution Time 0.0milliseconds

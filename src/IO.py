@@ -22,10 +22,30 @@ def algorithmMenu():
         2. Brute Force
     """)
 
-def saveConfirmation():
-    print("""
-        Do you want to save the result to a .txt file? (Y/N)
-    """)
+def saveConfirmation(nPoints, nDims, opt, points, closestPairs, closestDist, elapsed_time):
+    save = input("Do you want to save the result to a .txt file (Y/N)? ")
+
+    while (save != "Y" and save!= "y" and save!= "N" and save != "n"):
+        print("Your input is not valid. Please enter a valid input!")
+        save = input("Do you want to save the result to a .txt file (Y/N)? ")
+
+    if (save == "Y" or save == "y") :
+        fileName = input("The result will be saved to a file. Enter your desired file name: ")
+        writeToFile(nPoints, nDims, opt, fileName, points, closestPairs, closestDist, elapsed_time)
+
+def writeToFile(nPoints, nDims, opt, fileName, points, closestPairs, closestDist, elapsed_time):
+    dir_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+    f = open(dir_path + "\\output\\" + fileName + ".txt", "w")
+    f.write("Number of Points: " + str(nPoints)+ "\n")
+    f.write("Dimension: " + str(nDims)+ "\n")
+    f.write("Points: " + str(points) + "\n")
+    f.write("Algorithm: " + ("Divide and Conquer" if opt == 1 else "Brute Force") + "\n")
+    f.write("Closest Pairs: " + str(closestPairs) + "\n")
+    f.write("Closest Distance: " + str(closestDist) + "\n")
+    f.write("Execution Time: " + str(elapsed_time) + " milliseconds\n")
+    f.close()
+
+
 
 # TODO: Input validation gatau masih kurang atau ga
 def inputHandler():
