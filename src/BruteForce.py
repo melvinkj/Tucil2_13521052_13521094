@@ -59,6 +59,8 @@ def bruteForce(points, ctr):
     # print("Closest pair:")
     # print(closestPairs)      
     # return closestPairs, shortestDistance 
+    if (len(points) <= 1):
+        return None, None, ctr
 
     closestPairs = []
     for i in range(len(points)):
