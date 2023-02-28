@@ -32,11 +32,16 @@ def findStripClosest(points, dist, dim, ctr):
         if (dim == 2):
             newStripPoints = quickSortPoints(points, dim - 1)
         n = len(newStripPoints)
+        # print(newStripPoints)
+        # max_inter= 0
+        
         for i in range (n):
+            # inter = 0
             for j in range (i+1, n):
-                if (abs(newStripPoints[i][dim-1] - newStripPoints[j][dim-1]) > closestDist):
+                if (newStripPoints[j][dim-1] - newStripPoints[j][dim-1] > closestDist):
                     break
                 distPoint, ctr = getDistancePoints(newStripPoints[i], newStripPoints[j], ctr)
+                # inter+= 1
                 if (distPoint < closestDist):
                     closestPairs = []
                     closestDist = distPoint
@@ -45,6 +50,8 @@ def findStripClosest(points, dist, dim, ctr):
                 elif (distPoint == closestDist):
                     closestPair = [newStripPoints[i], newStripPoints[j]]
                     closestPairs = appendIfNotSame(closestPairs, closestPair)
+            # max_inter = inter if inter > max_inter else max_inter
+        # print(max_inter)
     # If the dimension is not two
     else:
         closestPairs, closestDist, ctr = findClosestPair(points, len(points), dim-1, ctr)
@@ -65,19 +72,13 @@ def findClosestPair(unsortedPoints, n: int, dim: int, ctr: int):
     else:
         # midPoint, leftPartPoints, rightPartPoints = dividePoints(points)
         # print(midPoint, leftPartPoints, rightPartPoints)
-        print(unsortedPoints)
-        print()
+
         points = quickSortPoints(unsortedPoints, len(unsortedPoints[0]) - dim)
         # print(points)
         mid = n // 2
         midPoint = points[mid][len(unsortedPoints[0]) - dim]
         leftPart = points[0:mid]
         rightPart = points[mid:]
-        print("Two Halves:")
-
-        print(leftPart, len(leftPart))
-        print(rightPart, len(rightPart))
-        print()
 
         leftClosestPoints, distLeftPair, ctr = findClosestPair(leftPart, len(leftPart), dim, ctr)
         rightClosestPoints, distRightPair, ctr = findClosestPair(rightPart, len(rightPart), dim, ctr)
