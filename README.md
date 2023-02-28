@@ -39,7 +39,17 @@ $ python src/main.py
 |   README.md
 |
 +---output
-|       test1.txt
+|       tc1.txt
+|       tc10.txt
+|       tc11.txt
+|       tc2.txt
+|       tc3.txt
+|       tc4.txt
+|       tc5.txt
+|       tc6.txt
+|       tc7.txt
+|       tc8.txt
+|       tc9.txt
 |
 +---src
 |       BruteForce.py
