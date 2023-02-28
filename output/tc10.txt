@@ -1,0 +1,19 @@
+Number of Points               : 10
+Dimension                      : 2
+Points                         : [[77, 22], [43, 52], [41, 24], [34, 24], [27, 24], [23, 2], [24, 15], [12, 54], [22, 54], [41, 14]]
+
+=========== DIVIDE AND CONQUER ===========
+Closest Pair(s) of Points: 
+	1. (34 , 24) - (41 , 24)
+	2. (27 , 24) - (34 , 24)
+Closest Distance               : 7.0
+Number of Euclidean Operations : 26
+Execution Time                 : 0.0 ms
+
+=============== BRUTE FORCE ===============
+Closest Pair(s) of Points: 
+	1. (41 , 24) - (34 , 24)
+	2. (34 , 24) - (27 , 24)
+Closest Distance               : 7.0
+Number of Euclidean Operations : 45
+Execution Time                 : 1.0027885437011719 ms
