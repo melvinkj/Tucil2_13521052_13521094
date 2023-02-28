@@ -23,18 +23,14 @@ def findStripClosest(points, dist, dim, ctr):
     closestDist = dist
     # Compute the closest dist only if the dimension is 2
     if (dim <= 2):
-
         if(len(points) <= 1):
             return None, None, ctr
-
         newStripPoints = points
         closestPairs = []
         if (dim == 2):
             newStripPoints = quickSortPoints(points, dim - 1)
         n = len(newStripPoints)
-        # print(newStripPoints)
         # max_inter= 0
-        
         for i in range (n):
             # inter = 0
             for j in range (i+1, n):
@@ -60,21 +56,13 @@ def findStripClosest(points, dist, dim, ctr):
 
 
 def findClosestPair(unsortedPoints, n: int, dim: int, ctr: int):
-    # if (n == 2):
-    #     closestPairs = [unsortedPoints]
-    #     closestDist, ctr = getDistancePoints(unsortedPoints[0], unsortedPoints[1], ctr)
-    #     print("hyhy ini brute force",unsortedPoints)
-    # elif (n == 3):
-    #     print("ini brute force 3")
-    #     closestPairs, closestDist, ctr = bruteForce(unsortedPoints, ctr)
     if (n <= 3):
         closestPairs, closestDist, ctr = bruteForce(unsortedPoints, ctr)
     else:
-        # midPoint, leftPartPoints, rightPartPoints = dividePoints(points)
-        # print(midPoint, leftPartPoints, rightPartPoints)
-
+        # Sort points
         points = quickSortPoints(unsortedPoints, len(unsortedPoints[0]) - dim)
-        # print(points)
+
+        # Divide phase
         mid = n // 2
         midPoint = points[mid][len(unsortedPoints[0]) - dim]
         leftPart = points[0:mid]
@@ -83,11 +71,7 @@ def findClosestPair(unsortedPoints, n: int, dim: int, ctr: int):
         leftClosestPoints, distLeftPair, ctr = findClosestPair(leftPart, len(leftPart), dim, ctr)
         rightClosestPoints, distRightPair, ctr = findClosestPair(rightPart, len(rightPart), dim, ctr)
         closestPairs = []
-        # print(leftClosestPoints)
-        # print(rightClosestPoints)
-        # print(closestPairs)
 
-        # TODO: consider if there are two pair with the same distance?
         if (distLeftPair < distRightPair):
             closestPairs = leftClosestPoints
             closestDist = distLeftPair
@@ -98,18 +82,13 @@ def findClosestPair(unsortedPoints, n: int, dim: int, ctr: int):
             closestPairs = leftClosestPoints
             closestPairs = extendIfNotSame(closestPairs, rightClosestPoints)
             closestDist = distLeftPair
-        # print("closest from halfves: ", closestPairs, closestDist)
+
+        # The closesDist from two halves became the delta
         leftBound = midPoint - closestDist
         rightBound = midPoint + closestDist
 
-        # closestDist adalah delta untuk mencari di sekitar garis pembagi
         filteredPoints = [x for x in points if leftBound <= x[len(unsortedPoints[0]) - dim] <= rightBound]
         stripClosestPoints, distStripPair, ctr = findStripClosest(filteredPoints, closestDist, dim, ctr)
-        # print(stripClosestPoints)
-        # print("points in strip: ", filteredPoints)
-        # print("closest points in strip", stripClosestPoints,distStripPair)
-        # print("current dimension", dim)
-        # print()
 
         if (stripClosestPoints != None):
             if (distStripPair < closestDist):
@@ -118,8 +97,6 @@ def findClosestPair(unsortedPoints, n: int, dim: int, ctr: int):
                 closestDist = distStripPair
             elif (distStripPair == closestDist):
                 closestPairs = extendIfNotSame(closestPairs, stripClosestPoints)
-        # print(stripClosestPoints)
-        # print(closestPairs)
         
     return closestPairs, closestDist, ctr
         
