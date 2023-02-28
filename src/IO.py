@@ -33,7 +33,7 @@ def saveConfirmation(nPoints, nDims, points, closestPairsDNC, closestDistDNC, el
     save = input("\nDo you want to save the result to a .txt file (Y/N)? ")
 
     while (save != "Y" and save!= "y" and save!= "N" and save != "n"):
-        print("Your input is not valid. Please enter a valid input!")
+        print("\033[31mYour input is not valid. Please enter a valid input!\033[00m")
         save = input("Do you want to save the result to a .txt file (Y/N)? ")
 
     if (save == "Y" or save == "y") :
@@ -72,21 +72,21 @@ def inputHandler():
         try:
             nPoints = int(input("Enter the n points you want to generate: "))
         except: 
-            print("Your input of n points is not valid. Please input a number with a minimum of two!")
+            print("\033[31mYour input of n points is not valid. Please input a number with a minimum of two!\033[00m")
             continue
         if (nPoints >= 2):
             break
-        print("Your input of n points is not valid. Please input a number with a minimum of two!")
+        print("\033[31mYour input of n points is not valid. Please input a number with a minimum of two!\033[00m")
     while True:
         try:
             nDims = int(input("Enter the d dimension of points you want to generate: "))
         except:
-            print("Your input of n points is not valid. Please input a number with a minimum of two!")
+            print("\033[31mYour input of n points is not valid. Please input a number with a minimum of two!\033[00m")
             continue
 
         if (nDims > 0):
             break
-        print("Your input of d dimensions is not valid. Please input a number with a minimum of one!")
+        print("\033[31mYour input of d dimensions is not valid. Please input a number with a minimum of one!\033[00m")
     return nPoints, nDims
 
 def readFromFile(fileName):

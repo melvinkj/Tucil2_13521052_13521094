@@ -39,8 +39,8 @@ def executeBruteForce(inputPoints):
 
 def main():
     IO.splashScreen()
-    IO.mainMenu()
-    opt = int(input("Enter your choice: "))
+    opt = 0
+            
     while (opt != 3):
         if (opt == 1 or opt == 2):
             if (opt == 1):
@@ -65,11 +65,15 @@ def main():
             IO.saveConfirmation(nPoints, nDims, points, closestPairsDNC, closestDistDNC, elapsed_timeDNC, ctrOptDNC, closestPairsBF, closestDistBF, elapsed_timeBF, ctrOptBF)
 
     
-        else:
-            print("\033[31mInvalid input! \033[00m \n")
+        # else:
+        #     print("\033[31mInvalid input! \033[00m \n")
         
         IO.mainMenu()
-        opt = int(input("Enter your choice: "))
+        try:
+            opt = int(input("Enter your choice: "))
+        except:
+            print("\033[31mInvalid input! \033[00m \n")
+            continue
 
 if __name__=="__main__":
     main()
