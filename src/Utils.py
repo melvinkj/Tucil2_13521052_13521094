@@ -34,7 +34,7 @@ def formatPoint(point):
     strPoint = "("
     i = 0
     while (i < len(point)-1):
-        strPoint = strPoint + str(point[i]) + "," 
+        strPoint = strPoint + str(point[i]) + " , " 
         i += 1
         
     strPoint = strPoint + str(point[i]) + ")"
@@ -46,7 +46,7 @@ def generateRandomPoints(total_points, total_dim) :
 
     for i in range (total_points) :
         for j in range (total_dim) :
-            points[i][j] = random.randint(-100, 100)
+            points[i][j] = round(random.uniform(-100, 100),2)
     
     print(points)
     return points

@@ -10,26 +10,27 @@ def splashScreen():
     ██║     ██║     ██║   ██║███████╗█████╗  ███████╗   ██║       ██████╔╝███████║██║██████╔╝███████╗
     ██║     ██║     ██║   ██║╚════██║██╔══╝  ╚════██║   ██║       ██╔═══╝ ██╔══██║██║██╔══██╗╚════██║
     ╚██████╗███████╗╚██████╔╝███████║███████╗███████║   ██║       ██║     ██║  ██║██║██║  ██║███████║
-    ╚═════╝╚══════╝ ╚═════╝ ╚══════╝╚══════╝╚══════╝   ╚═╝       ╚═╝     ╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚══════╝                                                                                                                         
-   \033[00m""")
+     ╚═════╝╚══════╝ ╚═════╝ ╚══════╝╚══════╝╚══════╝   ╚═╝       ╚═╝     ╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚══════╝  \033[00m""")
 
 def mainMenu():
     print("""
-        Choose:
-        1. Generate random points
-        2. File input
-        3. Exit
+==============================
+\033[31m************\033[00m\033[34m MENU \033[00m\033[31m************\033[00m
+==============================
+1. Generate Random Points
+2. File Input
+3. Exit
     """)
 
-def algorithmMenu():
-    print("""
-        Choose the algorithm to find closest pair:
-        1. Divide and Conquer
-        2. Brute Force
-    """)
+# def algorithmMenu():
+#     print("""
+#         Choose the algorithm to find closest pair:
+#         1. Divide and Conquer
+#         2. Brute Force
+#     """)
 
-def saveConfirmation(nPoints, nDims, opt, points, closestPairs, closestDist, elapsed_time, ctrOpt):
-    save = input("Do you want to save the result to a .txt file (Y/N)? ")
+def saveConfirmation(nPoints, nDims, points, closestPairsDNC, closestDistDNC, elapsed_timeDNC, ctrOptDNC, closestPairsBF, closestDistBF, elapsed_timeBF, ctrOptBF):
+    save = input("\nDo you want to save the result to a .txt file (Y/N)? ")
 
     while (save != "Y" and save!= "y" and save!= "N" and save != "n"):
         print("Your input is not valid. Please enter a valid input!")
@@ -37,25 +38,33 @@ def saveConfirmation(nPoints, nDims, opt, points, closestPairs, closestDist, ela
 
     if (save == "Y" or save == "y") :
         fileName = input("The result will be saved to a file. Enter your desired file name: ")
-        writeToFile(nPoints, nDims, opt, fileName, points, closestPairs, closestDist, elapsed_time, ctrOpt)
+        writeToFile(nPoints, nDims, fileName, points, closestPairsDNC, closestDistDNC, elapsed_timeDNC, ctrOptDNC, closestPairsBF, closestDistBF, elapsed_timeBF, ctrOptBF)
 
 def writePairsToFile(f, pairs):
-    f.write("Closest pair(s) of points: \n")
+    f.write("Closest Pair(s) of Points: \n")
     for i in range (len(pairs)):
         f.write("\t" + str(i+1) + ". " + Utils.formatPoint(pairs[i][0]) + " - " + Utils.formatPoint(pairs[i][1]) + "\n")
-    f.write("\n")
 
-def writeToFile(nPoints, nDims, opt, fileName, points, closestPairs, closestDist, elapsed_time, ctrOpt):
+def writeToFile(nPoints, nDims, fileName, points, closestPairsDNC, closestDistDNC, elapsed_timeDNC, ctrOptDNC, closestPairsBF, closestDistBF, elapsed_timeBF, ctrOptBF):
     dir_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
     f = open(dir_path + "\\output\\" + fileName + ".txt", "w")
-    f.write("Number of Points: " + str(nPoints)+ "\n")
-    f.write("Dimension: " + str(nDims)+ "\n")
-    f.write("Points: " + str(points) + "\n")
-    f.write("Algorithm: " + ("Divide and Conquer" if opt == 1 else "Brute Force") + "\n")
-    writePairsToFile(f, closestPairs)
-    f.write("Closest Distance: " + str(closestDist) + "\n")
-    f.write("Number of Euclidean operations:" + str(ctrOpt))
-    f.write("Execution Time: " + str(elapsed_time) + " milliseconds\n")
+    f.write("Number of Points               : " + str(nPoints)+ "\n")
+    f.write("Dimension                      : " + str(nDims)+ "\n")
+    f.write("Points                         : " + str(points) + "\n")
+
+    # Result by Divide and Conquer
+    f.write("\n=========== DIVIDE AND CONQUER ===========\n")
+    writePairsToFile(f, closestPairsDNC)
+    f.write("Closest Distance               : " + str(closestDistDNC) + "\n")
+    f.write("Number of Euclidean Operations : " + str(ctrOptDNC)+ "\n")
+    f.write("Execution Time                 : " + str(elapsed_timeDNC) + " ms\n")
+
+    # Result by Brute Force
+    f.write("\n=============== BRUTE FORCE ===============\n")
+    writePairsToFile(f, closestPairsBF)
+    f.write("Closest Distance               : " + str(closestDistBF) + "\n")
+    f.write("Number of Euclidean Operations : " + str(ctrOptBF)+ "\n")
+    f.write("Execution Time                 : " + str(elapsed_timeBF) + " ms\n")
     f.close()
 
 def inputHandler():
@@ -105,8 +114,7 @@ def visualize(points, pairs) :
     plt.show()
 
 def printPairs(pairs):
-    print("Closest pair(s) of points: ")
+    print("Closest Pair(s) of Points:")
     for i in range (len(pairs)):
-        print("\t" + str(i+1) + ". " + Utils.formatPoint(pairs[i][0]) + " - " + Utils.formatPoint(pairs[i][1]))
+        print("\t" + str(i+1) + ". \033[94m" + Utils.formatPoint(pairs[i][0]) + "\033[00m - \033[93m" + Utils.formatPoint(pairs[i][1]) + "\033[00m")
 
-    print("\n")

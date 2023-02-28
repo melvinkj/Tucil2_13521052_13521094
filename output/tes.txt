@@ -1,0 +1,17 @@
+Number of Points               : 7
+Dimension                      : 3
+Points                         : [[3, 5, 4], [1, 0, 1], [15, 4, 3], [3, 2, 4], [2, 2, 2], [3, 3, 3], [4, 4, 4]]
+
+=========== DIVIDE AND CONQUER ===========Closest pair(s) of points: 
+	1. (3,2,4) - (3,3,3)
+	2. (4,4,4) - (3,5,4)
+
+Closest Distance               : 1.4142135623730951
+Number of Euclidean Operations : 18Execution Time                 : 0.0 ms
+
+=============== BRUTE FORCE ===============Closest pair(s) of points: 
+	1. (3,5,4) - (4,4,4)
+	2. (3,2,4) - (3,3,3)
+
+Closest Distance               : 1.4142135623730951
+Number of Euclidean Operations : 21Execution Time                 : 0.0 ms
