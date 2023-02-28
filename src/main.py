@@ -55,6 +55,7 @@ def main():
             fileName = input("Enter your file name without .txt: ")
             filePoints = IO.readFromFile(fileName)
             algorithmOpt, closestPairs, closestDist, elapsed_time, ctrOpt = algorithmChooser(filePoints)
+            nPoints, nDims = len(filePoints) , len (filePoints[0])
             IO.saveConfirmation(nPoints, nDims, algorithmOpt, filePoints,closestPairs, closestDist, elapsed_time, ctrOpt)
         else:
             print("\033[31mInvalid input! \033[00m \n")
